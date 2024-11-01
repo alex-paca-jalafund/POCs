@@ -1,0 +1,975 @@
+CompilationUnit : package org.example;
+
+import java.util.ArrayList;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.HashSet;
+import java.util.Set;
+import static org.junit.jupiter.api.Assertions.*;
+
+class Animal {
+
+    public void eat() {
+        System.out.println("I can eat");
+    }
+}
+
+class Dog extends Animal {
+
+    @Override
+    public void eat() {
+        super.eat();
+        System.out.println("I eat dog food");
+    }
+
+    public void bark() {
+        System.out.println("I can bark");
+    }
+}
+
+class Cat extends Animal {
+
+    @Override
+    public void eat() {
+        super.eat();
+        System.out.println("I eat cat food");
+    }
+
+    public void miau() {
+        System.out.println("I can maullar");
+    }
+}
+
+class House {
+
+    Animal animal;
+
+    public House(Animal animal) {
+        this.animal = animal;
+    }
+
+    public void Dog() {
+        if (animal instanceof Dog) {
+            ((Dog) animal).bark();
+        } else {
+            System.out.println("There is no Dog");
+        }
+    }
+
+    public void Cat() {
+        System.out.println("miau");
+    }
+}
+
+class MainExample {
+
+    public static void main(String[] args) {
+        Dog labrador = new Dog();
+        labrador.eat();
+        labrador.bark();
+    }
+}
+
+class AnimalTest {
+
+    private final Set<String> executedMethods = new HashSet<>();
+
+    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+
+    @BeforeEach
+    public void setUp() {
+        executedMethods.add("setUp");
+        System.setOut(new PrintStream(outputStreamCaptor));
+        executedMethods.clear();
+    }
+
+    @Test
+    public void testDogEat() {
+        executedMethods.add("testDogEat");
+        Dog labrador = new Dog();
+        labrador.eat();
+        assertEquals("I can eat\nI eat dog food\n", outputStreamCaptor.toString().trim());
+        assertTrue(executedMethods.contains("eat"));
+    }
+
+    @Test
+    public void testDogBark() {
+        executedMethods.add("testDogBark");
+        Dog labrador = new Dog();
+        labrador.bark();
+        assertEquals("I can bark\n", outputStreamCaptor.toString().trim());
+        assertTrue(executedMethods.contains("bark"));
+    }
+
+    @Test
+    public void testCatEat() {
+        executedMethods.add("testCatEat");
+        Cat cat = new Cat();
+        cat.eat();
+        assertEquals("I can eat\nI eat cat food\n", outputStreamCaptor.toString().trim());
+        assertTrue(executedMethods.contains("eat"));
+    }
+
+    @Test
+    public void testHouseWithDog() {
+        executedMethods.add("testHouseWithDog");
+        House house = new House(new Dog());
+        house.Dog();
+        assertEquals("I can bark\n", outputStreamCaptor.toString().trim());
+        assertTrue(executedMethods.contains("Dog"));
+    }
+
+    @Test
+    public void testHouseWithNonDog() {
+        executedMethods.add("testHouseWithNonDog");
+        House house = new House(new Cat());
+        house.Dog();
+        assertEquals("There is no Dog", outputStreamCaptor.toString().trim());
+        assertTrue(executedMethods.contains("Dog"));
+    }
+
+    @Test
+    public void testMainMethod() {
+        executedMethods.add("testMainMethod");
+        MainExample.main(new String[0]);
+        assertTrue(executedMethods.contains("main"));
+        assertTrue(executedMethods.contains("eat"));
+        assertTrue(executedMethods.contains("bark"));
+    }
+}
+
+ PackageDeclaration : package org.example;
+
+
+  Name : org.example
+   Name : org
+ ImportDeclaration : import java.util.ArrayList;
+
+  Name : java.util.ArrayList
+   Name : java.util
+    Name : java
+ ImportDeclaration : import org.junit.jupiter.api.BeforeEach;
+
+  Name : org.junit.jupiter.api.BeforeEach
+   Name : org.junit.jupiter.api
+    Name : org.junit.jupiter
+     Name : org.junit
+      Name : org
+ ImportDeclaration : import org.junit.jupiter.api.Test;
+
+  Name : org.junit.jupiter.api.Test
+   Name : org.junit.jupiter.api
+    Name : org.junit.jupiter
+     Name : org.junit
+      Name : org
+ ImportDeclaration : import java.io.ByteArrayOutputStream;
+
+  Name : java.io.ByteArrayOutputStream
+   Name : java.io
+    Name : java
+ ImportDeclaration : import java.io.PrintStream;
+
+  Name : java.io.PrintStream
+   Name : java.io
+    Name : java
+ ImportDeclaration : import java.util.HashSet;
+
+  Name : java.util.HashSet
+   Name : java.util
+    Name : java
+ ImportDeclaration : import java.util.Set;
+
+  Name : java.util.Set
+   Name : java.util
+    Name : java
+ ImportDeclaration : import static org.junit.jupiter.api.Assertions.*;
+
+  Name : org.junit.jupiter.api.Assertions
+   Name : org.junit.jupiter.api
+    Name : org.junit.jupiter
+     Name : org.junit
+      Name : org
+ ClassOrInterfaceDeclaration : class Animal {
+
+    public void eat() {
+        System.out.println("I can eat");
+    }
+}
+  SimpleName : Animal
+  MethodDeclaration : public void eat() {
+    System.out.println("I can eat");
+}
+   Modifier : public 
+   SimpleName : eat
+   VoidType : void
+   BlockStmt : {
+    System.out.println("I can eat");
+}
+    ExpressionStmt : System.out.println("I can eat");
+     MethodCallExpr : System.out.println("I can eat")
+      FieldAccessExpr : System.out
+       NameExpr : System
+        SimpleName : System
+       SimpleName : out
+      SimpleName : println
+      StringLiteralExpr : "I can eat"
+ ClassOrInterfaceDeclaration : class Dog extends Animal {
+
+    @Override
+    public void eat() {
+        super.eat();
+        System.out.println("I eat dog food");
+    }
+
+    public void bark() {
+        System.out.println("I can bark");
+    }
+}
+  SimpleName : Dog
+  MethodDeclaration : @Override
+public void eat() {
+    super.eat();
+    System.out.println("I eat dog food");
+}
+   MarkerAnnotationExpr : @Override
+    Name : Override
+   Modifier : public 
+   SimpleName : eat
+   VoidType : void
+   BlockStmt : {
+    super.eat();
+    System.out.println("I eat dog food");
+}
+    ExpressionStmt : super.eat();
+     MethodCallExpr : super.eat()
+      SuperExpr : super
+      SimpleName : eat
+    ExpressionStmt : System.out.println("I eat dog food");
+     MethodCallExpr : System.out.println("I eat dog food")
+      FieldAccessExpr : System.out
+       NameExpr : System
+        SimpleName : System
+       SimpleName : out
+      SimpleName : println
+      StringLiteralExpr : "I eat dog food"
+  MethodDeclaration : public void bark() {
+    System.out.println("I can bark");
+}
+   Modifier : public 
+   SimpleName : bark
+   VoidType : void
+   BlockStmt : {
+    System.out.println("I can bark");
+}
+    ExpressionStmt : System.out.println("I can bark");
+     MethodCallExpr : System.out.println("I can bark")
+      FieldAccessExpr : System.out
+       NameExpr : System
+        SimpleName : System
+       SimpleName : out
+      SimpleName : println
+      StringLiteralExpr : "I can bark"
+  ClassOrInterfaceType : Animal
+   SimpleName : Animal
+ ClassOrInterfaceDeclaration : class Cat extends Animal {
+
+    @Override
+    public void eat() {
+        super.eat();
+        System.out.println("I eat cat food");
+    }
+
+    public void miau() {
+        System.out.println("I can maullar");
+    }
+}
+  SimpleName : Cat
+  MethodDeclaration : @Override
+public void eat() {
+    super.eat();
+    System.out.println("I eat cat food");
+}
+   MarkerAnnotationExpr : @Override
+    Name : Override
+   Modifier : public 
+   SimpleName : eat
+   VoidType : void
+   BlockStmt : {
+    super.eat();
+    System.out.println("I eat cat food");
+}
+    ExpressionStmt : super.eat();
+     MethodCallExpr : super.eat()
+      SuperExpr : super
+      SimpleName : eat
+    ExpressionStmt : System.out.println("I eat cat food");
+     MethodCallExpr : System.out.println("I eat cat food")
+      FieldAccessExpr : System.out
+       NameExpr : System
+        SimpleName : System
+       SimpleName : out
+      SimpleName : println
+      StringLiteralExpr : "I eat cat food"
+  MethodDeclaration : public void miau() {
+    System.out.println("I can maullar");
+}
+   Modifier : public 
+   SimpleName : miau
+   VoidType : void
+   BlockStmt : {
+    System.out.println("I can maullar");
+}
+    ExpressionStmt : System.out.println("I can maullar");
+     MethodCallExpr : System.out.println("I can maullar")
+      FieldAccessExpr : System.out
+       NameExpr : System
+        SimpleName : System
+       SimpleName : out
+      SimpleName : println
+      StringLiteralExpr : "I can maullar"
+  ClassOrInterfaceType : Animal
+   SimpleName : Animal
+ ClassOrInterfaceDeclaration : class House {
+
+    Animal animal;
+
+    public House(Animal animal) {
+        this.animal = animal;
+    }
+
+    public void Dog() {
+        if (animal instanceof Dog) {
+            ((Dog) animal).bark();
+        } else {
+            System.out.println("There is no Dog");
+        }
+    }
+
+    public void Cat() {
+        System.out.println("miau");
+    }
+}
+  SimpleName : House
+  FieldDeclaration : Animal animal;
+   VariableDeclarator : animal
+    ClassOrInterfaceType : Animal
+     SimpleName : Animal
+    SimpleName : animal
+  ConstructorDeclaration : public House(Animal animal) {
+    this.animal = animal;
+}
+   Modifier : public 
+   SimpleName : House
+   Parameter : Animal animal
+    ClassOrInterfaceType : Animal
+     SimpleName : Animal
+    SimpleName : animal
+   BlockStmt : {
+    this.animal = animal;
+}
+    ExpressionStmt : this.animal = animal;
+     AssignExpr : this.animal = animal
+      FieldAccessExpr : this.animal
+       ThisExpr : this
+       SimpleName : animal
+      NameExpr : animal
+       SimpleName : animal
+  MethodDeclaration : public void Dog() {
+    if (animal instanceof Dog) {
+        ((Dog) animal).bark();
+    } else {
+        System.out.println("There is no Dog");
+    }
+}
+   Modifier : public 
+   SimpleName : Dog
+   VoidType : void
+   BlockStmt : {
+    if (animal instanceof Dog) {
+        ((Dog) animal).bark();
+    } else {
+        System.out.println("There is no Dog");
+    }
+}
+    IfStmt : if (animal instanceof Dog) {
+    ((Dog) animal).bark();
+} else {
+    System.out.println("There is no Dog");
+}
+     InstanceOfExpr : animal instanceof Dog
+      NameExpr : animal
+       SimpleName : animal
+      ClassOrInterfaceType : Dog
+       SimpleName : Dog
+     BlockStmt : {
+    ((Dog) animal).bark();
+}
+      ExpressionStmt : ((Dog) animal).bark();
+       MethodCallExpr : ((Dog) animal).bark()
+        EnclosedExpr : ((Dog) animal)
+         CastExpr : (Dog) animal
+          ClassOrInterfaceType : Dog
+           SimpleName : Dog
+          NameExpr : animal
+           SimpleName : animal
+        SimpleName : bark
+     BlockStmt : {
+    System.out.println("There is no Dog");
+}
+      ExpressionStmt : System.out.println("There is no Dog");
+       MethodCallExpr : System.out.println("There is no Dog")
+        FieldAccessExpr : System.out
+         NameExpr : System
+          SimpleName : System
+         SimpleName : out
+        SimpleName : println
+        StringLiteralExpr : "There is no Dog"
+  MethodDeclaration : public void Cat() {
+    System.out.println("miau");
+}
+   Modifier : public 
+   SimpleName : Cat
+   VoidType : void
+   BlockStmt : {
+    System.out.println("miau");
+}
+    ExpressionStmt : System.out.println("miau");
+     MethodCallExpr : System.out.println("miau")
+      FieldAccessExpr : System.out
+       NameExpr : System
+        SimpleName : System
+       SimpleName : out
+      SimpleName : println
+      StringLiteralExpr : "miau"
+ ClassOrInterfaceDeclaration : class MainExample {
+
+    public static void main(String[] args) {
+        Dog labrador = new Dog();
+        labrador.eat();
+        labrador.bark();
+    }
+}
+  SimpleName : MainExample
+  MethodDeclaration : public static void main(String[] args) {
+    Dog labrador = new Dog();
+    labrador.eat();
+    labrador.bark();
+}
+   Modifier : public 
+   Modifier : static 
+   SimpleName : main
+   Parameter : String[] args
+    ArrayType : String[]
+     ClassOrInterfaceType : String
+      SimpleName : String
+    SimpleName : args
+   VoidType : void
+   BlockStmt : {
+    Dog labrador = new Dog();
+    labrador.eat();
+    labrador.bark();
+}
+    ExpressionStmt : Dog labrador = new Dog();
+     VariableDeclarationExpr : Dog labrador = new Dog()
+      VariableDeclarator : labrador = new Dog()
+       ClassOrInterfaceType : Dog
+        SimpleName : Dog
+       SimpleName : labrador
+       ObjectCreationExpr : new Dog()
+        ClassOrInterfaceType : Dog
+         SimpleName : Dog
+    ExpressionStmt : labrador.eat();
+     MethodCallExpr : labrador.eat()
+      NameExpr : labrador
+       SimpleName : labrador
+      SimpleName : eat
+    ExpressionStmt : labrador.bark();
+     MethodCallExpr : labrador.bark()
+      NameExpr : labrador
+       SimpleName : labrador
+      SimpleName : bark
+ ClassOrInterfaceDeclaration : class AnimalTest {
+
+    private final Set<String> executedMethods = new HashSet<>();
+
+    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+
+    @BeforeEach
+    public void setUp() {
+        executedMethods.add("setUp");
+        System.setOut(new PrintStream(outputStreamCaptor));
+        executedMethods.clear();
+    }
+
+    @Test
+    public void testDogEat() {
+        executedMethods.add("testDogEat");
+        Dog labrador = new Dog();
+        labrador.eat();
+        assertEquals("I can eat\nI eat dog food\n", outputStreamCaptor.toString().trim());
+        assertTrue(executedMethods.contains("eat"));
+    }
+
+    @Test
+    public void testDogBark() {
+        executedMethods.add("testDogBark");
+        Dog labrador = new Dog();
+        labrador.bark();
+        assertEquals("I can bark\n", outputStreamCaptor.toString().trim());
+        assertTrue(executedMethods.contains("bark"));
+    }
+
+    @Test
+    public void testCatEat() {
+        executedMethods.add("testCatEat");
+        Cat cat = new Cat();
+        cat.eat();
+        assertEquals("I can eat\nI eat cat food\n", outputStreamCaptor.toString().trim());
+        assertTrue(executedMethods.contains("eat"));
+    }
+
+    @Test
+    public void testHouseWithDog() {
+        executedMethods.add("testHouseWithDog");
+        House house = new House(new Dog());
+        house.Dog();
+        assertEquals("I can bark\n", outputStreamCaptor.toString().trim());
+        assertTrue(executedMethods.contains("Dog"));
+    }
+
+    @Test
+    public void testHouseWithNonDog() {
+        executedMethods.add("testHouseWithNonDog");
+        House house = new House(new Cat());
+        house.Dog();
+        assertEquals("There is no Dog", outputStreamCaptor.toString().trim());
+        assertTrue(executedMethods.contains("Dog"));
+    }
+
+    @Test
+    public void testMainMethod() {
+        executedMethods.add("testMainMethod");
+        MainExample.main(new String[0]);
+        assertTrue(executedMethods.contains("main"));
+        assertTrue(executedMethods.contains("eat"));
+        assertTrue(executedMethods.contains("bark"));
+    }
+}
+  SimpleName : AnimalTest
+  FieldDeclaration : private final Set<String> executedMethods = new HashSet<>();
+   Modifier : private 
+   Modifier : final 
+   VariableDeclarator : executedMethods = new HashSet<>()
+    ClassOrInterfaceType : Set<String>
+     SimpleName : Set
+     ClassOrInterfaceType : String
+      SimpleName : String
+    SimpleName : executedMethods
+    ObjectCreationExpr : new HashSet<>()
+     ClassOrInterfaceType : HashSet<>
+      SimpleName : HashSet
+  FieldDeclaration : private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+   Modifier : private 
+   Modifier : final 
+   VariableDeclarator : outputStreamCaptor = new ByteArrayOutputStream()
+    ClassOrInterfaceType : ByteArrayOutputStream
+     SimpleName : ByteArrayOutputStream
+    SimpleName : outputStreamCaptor
+    ObjectCreationExpr : new ByteArrayOutputStream()
+     ClassOrInterfaceType : ByteArrayOutputStream
+      SimpleName : ByteArrayOutputStream
+  MethodDeclaration : @BeforeEach
+public void setUp() {
+    executedMethods.add("setUp");
+    System.setOut(new PrintStream(outputStreamCaptor));
+    executedMethods.clear();
+}
+   MarkerAnnotationExpr : @BeforeEach
+    Name : BeforeEach
+   Modifier : public 
+   SimpleName : setUp
+   VoidType : void
+   BlockStmt : {
+    executedMethods.add("setUp");
+    System.setOut(new PrintStream(outputStreamCaptor));
+    executedMethods.clear();
+}
+    ExpressionStmt : executedMethods.add("setUp");
+     MethodCallExpr : executedMethods.add("setUp")
+      NameExpr : executedMethods
+       SimpleName : executedMethods
+      SimpleName : add
+      StringLiteralExpr : "setUp"
+    ExpressionStmt : System.setOut(new PrintStream(outputStreamCaptor));
+     MethodCallExpr : System.setOut(new PrintStream(outputStreamCaptor))
+      NameExpr : System
+       SimpleName : System
+      SimpleName : setOut
+      ObjectCreationExpr : new PrintStream(outputStreamCaptor)
+       ClassOrInterfaceType : PrintStream
+        SimpleName : PrintStream
+       NameExpr : outputStreamCaptor
+        SimpleName : outputStreamCaptor
+    ExpressionStmt : executedMethods.clear();
+     MethodCallExpr : executedMethods.clear()
+      NameExpr : executedMethods
+       SimpleName : executedMethods
+      SimpleName : clear
+  MethodDeclaration : @Test
+public void testDogEat() {
+    executedMethods.add("testDogEat");
+    Dog labrador = new Dog();
+    labrador.eat();
+    assertEquals("I can eat\nI eat dog food\n", outputStreamCaptor.toString().trim());
+    assertTrue(executedMethods.contains("eat"));
+}
+   MarkerAnnotationExpr : @Test
+    Name : Test
+   Modifier : public 
+   SimpleName : testDogEat
+   VoidType : void
+   BlockStmt : {
+    executedMethods.add("testDogEat");
+    Dog labrador = new Dog();
+    labrador.eat();
+    assertEquals("I can eat\nI eat dog food\n", outputStreamCaptor.toString().trim());
+    assertTrue(executedMethods.contains("eat"));
+}
+    ExpressionStmt : executedMethods.add("testDogEat");
+     MethodCallExpr : executedMethods.add("testDogEat")
+      NameExpr : executedMethods
+       SimpleName : executedMethods
+      SimpleName : add
+      StringLiteralExpr : "testDogEat"
+    ExpressionStmt : Dog labrador = new Dog();
+     VariableDeclarationExpr : Dog labrador = new Dog()
+      VariableDeclarator : labrador = new Dog()
+       ClassOrInterfaceType : Dog
+        SimpleName : Dog
+       SimpleName : labrador
+       ObjectCreationExpr : new Dog()
+        ClassOrInterfaceType : Dog
+         SimpleName : Dog
+    ExpressionStmt : labrador.eat();
+     MethodCallExpr : labrador.eat()
+      NameExpr : labrador
+       SimpleName : labrador
+      SimpleName : eat
+    ExpressionStmt : assertEquals("I can eat\nI eat dog food\n", outputStreamCaptor.toString().trim());
+     MethodCallExpr : assertEquals("I can eat\nI eat dog food\n", outputStreamCaptor.toString().trim())
+      SimpleName : assertEquals
+      StringLiteralExpr : "I can eat\nI eat dog food\n"
+      MethodCallExpr : outputStreamCaptor.toString().trim()
+       MethodCallExpr : outputStreamCaptor.toString()
+        NameExpr : outputStreamCaptor
+         SimpleName : outputStreamCaptor
+        SimpleName : toString
+       SimpleName : trim
+    ExpressionStmt : assertTrue(executedMethods.contains("eat"));
+     MethodCallExpr : assertTrue(executedMethods.contains("eat"))
+      SimpleName : assertTrue
+      MethodCallExpr : executedMethods.contains("eat")
+       NameExpr : executedMethods
+        SimpleName : executedMethods
+       SimpleName : contains
+       StringLiteralExpr : "eat"
+  MethodDeclaration : @Test
+public void testDogBark() {
+    executedMethods.add("testDogBark");
+    Dog labrador = new Dog();
+    labrador.bark();
+    assertEquals("I can bark\n", outputStreamCaptor.toString().trim());
+    assertTrue(executedMethods.contains("bark"));
+}
+   MarkerAnnotationExpr : @Test
+    Name : Test
+   Modifier : public 
+   SimpleName : testDogBark
+   VoidType : void
+   BlockStmt : {
+    executedMethods.add("testDogBark");
+    Dog labrador = new Dog();
+    labrador.bark();
+    assertEquals("I can bark\n", outputStreamCaptor.toString().trim());
+    assertTrue(executedMethods.contains("bark"));
+}
+    ExpressionStmt : executedMethods.add("testDogBark");
+     MethodCallExpr : executedMethods.add("testDogBark")
+      NameExpr : executedMethods
+       SimpleName : executedMethods
+      SimpleName : add
+      StringLiteralExpr : "testDogBark"
+    ExpressionStmt : Dog labrador = new Dog();
+     VariableDeclarationExpr : Dog labrador = new Dog()
+      VariableDeclarator : labrador = new Dog()
+       ClassOrInterfaceType : Dog
+        SimpleName : Dog
+       SimpleName : labrador
+       ObjectCreationExpr : new Dog()
+        ClassOrInterfaceType : Dog
+         SimpleName : Dog
+    ExpressionStmt : labrador.bark();
+     MethodCallExpr : labrador.bark()
+      NameExpr : labrador
+       SimpleName : labrador
+      SimpleName : bark
+    ExpressionStmt : assertEquals("I can bark\n", outputStreamCaptor.toString().trim());
+     MethodCallExpr : assertEquals("I can bark\n", outputStreamCaptor.toString().trim())
+      SimpleName : assertEquals
+      StringLiteralExpr : "I can bark\n"
+      MethodCallExpr : outputStreamCaptor.toString().trim()
+       MethodCallExpr : outputStreamCaptor.toString()
+        NameExpr : outputStreamCaptor
+         SimpleName : outputStreamCaptor
+        SimpleName : toString
+       SimpleName : trim
+    ExpressionStmt : assertTrue(executedMethods.contains("bark"));
+     MethodCallExpr : assertTrue(executedMethods.contains("bark"))
+      SimpleName : assertTrue
+      MethodCallExpr : executedMethods.contains("bark")
+       NameExpr : executedMethods
+        SimpleName : executedMethods
+       SimpleName : contains
+       StringLiteralExpr : "bark"
+  MethodDeclaration : @Test
+public void testCatEat() {
+    executedMethods.add("testCatEat");
+    Cat cat = new Cat();
+    cat.eat();
+    assertEquals("I can eat\nI eat cat food\n", outputStreamCaptor.toString().trim());
+    assertTrue(executedMethods.contains("eat"));
+}
+   MarkerAnnotationExpr : @Test
+    Name : Test
+   Modifier : public 
+   SimpleName : testCatEat
+   VoidType : void
+   BlockStmt : {
+    executedMethods.add("testCatEat");
+    Cat cat = new Cat();
+    cat.eat();
+    assertEquals("I can eat\nI eat cat food\n", outputStreamCaptor.toString().trim());
+    assertTrue(executedMethods.contains("eat"));
+}
+    ExpressionStmt : executedMethods.add("testCatEat");
+     MethodCallExpr : executedMethods.add("testCatEat")
+      NameExpr : executedMethods
+       SimpleName : executedMethods
+      SimpleName : add
+      StringLiteralExpr : "testCatEat"
+    ExpressionStmt : Cat cat = new Cat();
+     VariableDeclarationExpr : Cat cat = new Cat()
+      VariableDeclarator : cat = new Cat()
+       ClassOrInterfaceType : Cat
+        SimpleName : Cat
+       SimpleName : cat
+       ObjectCreationExpr : new Cat()
+        ClassOrInterfaceType : Cat
+         SimpleName : Cat
+    ExpressionStmt : cat.eat();
+     MethodCallExpr : cat.eat()
+      NameExpr : cat
+       SimpleName : cat
+      SimpleName : eat
+    ExpressionStmt : assertEquals("I can eat\nI eat cat food\n", outputStreamCaptor.toString().trim());
+     MethodCallExpr : assertEquals("I can eat\nI eat cat food\n", outputStreamCaptor.toString().trim())
+      SimpleName : assertEquals
+      StringLiteralExpr : "I can eat\nI eat cat food\n"
+      MethodCallExpr : outputStreamCaptor.toString().trim()
+       MethodCallExpr : outputStreamCaptor.toString()
+        NameExpr : outputStreamCaptor
+         SimpleName : outputStreamCaptor
+        SimpleName : toString
+       SimpleName : trim
+    ExpressionStmt : assertTrue(executedMethods.contains("eat"));
+     MethodCallExpr : assertTrue(executedMethods.contains("eat"))
+      SimpleName : assertTrue
+      MethodCallExpr : executedMethods.contains("eat")
+       NameExpr : executedMethods
+        SimpleName : executedMethods
+       SimpleName : contains
+       StringLiteralExpr : "eat"
+  MethodDeclaration : @Test
+public void testHouseWithDog() {
+    executedMethods.add("testHouseWithDog");
+    House house = new House(new Dog());
+    house.Dog();
+    assertEquals("I can bark\n", outputStreamCaptor.toString().trim());
+    assertTrue(executedMethods.contains("Dog"));
+}
+   MarkerAnnotationExpr : @Test
+    Name : Test
+   Modifier : public 
+   SimpleName : testHouseWithDog
+   VoidType : void
+   BlockStmt : {
+    executedMethods.add("testHouseWithDog");
+    House house = new House(new Dog());
+    house.Dog();
+    assertEquals("I can bark\n", outputStreamCaptor.toString().trim());
+    assertTrue(executedMethods.contains("Dog"));
+}
+    ExpressionStmt : executedMethods.add("testHouseWithDog");
+     MethodCallExpr : executedMethods.add("testHouseWithDog")
+      NameExpr : executedMethods
+       SimpleName : executedMethods
+      SimpleName : add
+      StringLiteralExpr : "testHouseWithDog"
+    ExpressionStmt : House house = new House(new Dog());
+     VariableDeclarationExpr : House house = new House(new Dog())
+      VariableDeclarator : house = new House(new Dog())
+       ClassOrInterfaceType : House
+        SimpleName : House
+       SimpleName : house
+       ObjectCreationExpr : new House(new Dog())
+        ClassOrInterfaceType : House
+         SimpleName : House
+        ObjectCreationExpr : new Dog()
+         ClassOrInterfaceType : Dog
+          SimpleName : Dog
+    ExpressionStmt : house.Dog();
+     MethodCallExpr : house.Dog()
+      NameExpr : house
+       SimpleName : house
+      SimpleName : Dog
+    ExpressionStmt : assertEquals("I can bark\n", outputStreamCaptor.toString().trim());
+     MethodCallExpr : assertEquals("I can bark\n", outputStreamCaptor.toString().trim())
+      SimpleName : assertEquals
+      StringLiteralExpr : "I can bark\n"
+      MethodCallExpr : outputStreamCaptor.toString().trim()
+       MethodCallExpr : outputStreamCaptor.toString()
+        NameExpr : outputStreamCaptor
+         SimpleName : outputStreamCaptor
+        SimpleName : toString
+       SimpleName : trim
+    ExpressionStmt : assertTrue(executedMethods.contains("Dog"));
+     MethodCallExpr : assertTrue(executedMethods.contains("Dog"))
+      SimpleName : assertTrue
+      MethodCallExpr : executedMethods.contains("Dog")
+       NameExpr : executedMethods
+        SimpleName : executedMethods
+       SimpleName : contains
+       StringLiteralExpr : "Dog"
+  MethodDeclaration : @Test
+public void testHouseWithNonDog() {
+    executedMethods.add("testHouseWithNonDog");
+    House house = new House(new Cat());
+    house.Dog();
+    assertEquals("There is no Dog", outputStreamCaptor.toString().trim());
+    assertTrue(executedMethods.contains("Dog"));
+}
+   MarkerAnnotationExpr : @Test
+    Name : Test
+   Modifier : public 
+   SimpleName : testHouseWithNonDog
+   VoidType : void
+   BlockStmt : {
+    executedMethods.add("testHouseWithNonDog");
+    House house = new House(new Cat());
+    house.Dog();
+    assertEquals("There is no Dog", outputStreamCaptor.toString().trim());
+    assertTrue(executedMethods.contains("Dog"));
+}
+    ExpressionStmt : executedMethods.add("testHouseWithNonDog");
+     MethodCallExpr : executedMethods.add("testHouseWithNonDog")
+      NameExpr : executedMethods
+       SimpleName : executedMethods
+      SimpleName : add
+      StringLiteralExpr : "testHouseWithNonDog"
+    ExpressionStmt : House house = new House(new Cat());
+     VariableDeclarationExpr : House house = new House(new Cat())
+      VariableDeclarator : house = new House(new Cat())
+       ClassOrInterfaceType : House
+        SimpleName : House
+       SimpleName : house
+       ObjectCreationExpr : new House(new Cat())
+        ClassOrInterfaceType : House
+         SimpleName : House
+        ObjectCreationExpr : new Cat()
+         ClassOrInterfaceType : Cat
+          SimpleName : Cat
+    ExpressionStmt : house.Dog();
+     MethodCallExpr : house.Dog()
+      NameExpr : house
+       SimpleName : house
+      SimpleName : Dog
+    ExpressionStmt : assertEquals("There is no Dog", outputStreamCaptor.toString().trim());
+     MethodCallExpr : assertEquals("There is no Dog", outputStreamCaptor.toString().trim())
+      SimpleName : assertEquals
+      StringLiteralExpr : "There is no Dog"
+      MethodCallExpr : outputStreamCaptor.toString().trim()
+       MethodCallExpr : outputStreamCaptor.toString()
+        NameExpr : outputStreamCaptor
+         SimpleName : outputStreamCaptor
+        SimpleName : toString
+       SimpleName : trim
+    ExpressionStmt : assertTrue(executedMethods.contains("Dog"));
+     MethodCallExpr : assertTrue(executedMethods.contains("Dog"))
+      SimpleName : assertTrue
+      MethodCallExpr : executedMethods.contains("Dog")
+       NameExpr : executedMethods
+        SimpleName : executedMethods
+       SimpleName : contains
+       StringLiteralExpr : "Dog"
+  MethodDeclaration : @Test
+public void testMainMethod() {
+    executedMethods.add("testMainMethod");
+    MainExample.main(new String[0]);
+    assertTrue(executedMethods.contains("main"));
+    assertTrue(executedMethods.contains("eat"));
+    assertTrue(executedMethods.contains("bark"));
+}
+   MarkerAnnotationExpr : @Test
+    Name : Test
+   Modifier : public 
+   SimpleName : testMainMethod
+   VoidType : void
+   BlockStmt : {
+    executedMethods.add("testMainMethod");
+    MainExample.main(new String[0]);
+    assertTrue(executedMethods.contains("main"));
+    assertTrue(executedMethods.contains("eat"));
+    assertTrue(executedMethods.contains("bark"));
+}
+    ExpressionStmt : executedMethods.add("testMainMethod");
+     MethodCallExpr : executedMethods.add("testMainMethod")
+      NameExpr : executedMethods
+       SimpleName : executedMethods
+      SimpleName : add
+      StringLiteralExpr : "testMainMethod"
+    ExpressionStmt : MainExample.main(new String[0]);
+     MethodCallExpr : MainExample.main(new String[0])
+      NameExpr : MainExample
+       SimpleName : MainExample
+      SimpleName : main
+      ArrayCreationExpr : new String[0]
+       ClassOrInterfaceType : String
+        SimpleName : String
+       ArrayCreationLevel : [0]
+        IntegerLiteralExpr : 0
+    ExpressionStmt : assertTrue(executedMethods.contains("main"));
+     MethodCallExpr : assertTrue(executedMethods.contains("main"))
+      SimpleName : assertTrue
+      MethodCallExpr : executedMethods.contains("main")
+       NameExpr : executedMethods
+        SimpleName : executedMethods
+       SimpleName : contains
+       StringLiteralExpr : "main"
+    ExpressionStmt : assertTrue(executedMethods.contains("eat"));
+     MethodCallExpr : assertTrue(executedMethods.contains("eat"))
+      SimpleName : assertTrue
+      MethodCallExpr : executedMethods.contains("eat")
+       NameExpr : executedMethods
+        SimpleName : executedMethods
+       SimpleName : contains
+       StringLiteralExpr : "eat"
+    ExpressionStmt : assertTrue(executedMethods.contains("bark"));
+     MethodCallExpr : assertTrue(executedMethods.contains("bark"))
+      SimpleName : assertTrue
+      MethodCallExpr : executedMethods.contains("bark")
+       NameExpr : executedMethods
+        SimpleName : executedMethods
+       SimpleName : contains
+       StringLiteralExpr : "bark"
